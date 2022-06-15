@@ -1,0 +1,27 @@
+name: tweetbot
+
+on:
+  schedule:
+    - cron: '00 01 * * *'
+
+jobs:
+  tweetbot-post:
+    runs-on: macOS-latest
+    env:
+      BEARER_TOKEN: ${{ secrets.BEARER_TOKEN }}
+      MEANINGCLOUD_TOKEN: ${{ secrets.MEANING_TOKEN }}
+      ENDPOINT_TOKEN: ${{ secrets.ENDPOINT_TOKEN }}
+    steps:
+      - uses: actions/checkout@v2
+      - uses: r-lib/actions/setup-r@master
+      - name: Install packages
+        run: Rscript -e 'install.packages(c("rtweet", "dplyr", "curl", "jsonlite"))'
+      - name: Merge files
+        run: Rscript tweets_action.R
+      - name: Commit files
+        run: |
+          git config --local user.email "actions@github.com"
+          git config --local user.name "GitHub Actions"
+          git add --all
+          git commit -am "add data"
+          git push
