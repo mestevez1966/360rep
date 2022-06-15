@@ -9,7 +9,7 @@ library(jsonlite)
 # https://public.graphext.com/f1dd11b4acb1e181/index.html
 
 # Auth bearer token
-auth <- rtweet_app(bearer_token = Sys.getenv("BEARER_TOKEN"))
+auth <- rtweet::rtweet_app(bearer_token = Sys.getenv("BEARER_TOKEN"))
 
 
 #---------------
@@ -19,20 +19,20 @@ auth <- rtweet_app(bearer_token = Sys.getenv("BEARER_TOKEN"))
 # Función MeaningCloud
 meaningcloud <- function(texto, token = Sys.getenv("MEANING_TOKEN")) {
   # Post
-  h <- new_handle()
-  handle_setform(h,
-                 key = token,
-                 txt = texto,
-                 lang = "auto")
+  h <- curl::new_handle()
+  curl::handle_setform(h,
+                       key = token,
+                       txt = texto,
+                       lang = "auto")
 
-  print(texto)
+  # print(texto)
 
-  req <- curl_fetch_memory(Sys.getenv("ENDPOINT_TOKEN"), handle = h)
+  req <- curl::curl_fetch_memory(Sys.getenv("ENDPOINT_TOKEN"), handle = h)
 
   req <- req$content %>%
     rawToChar() %>%
     jsonlite::prettify() %>%
-    fromJSON() %>%
+    jsonlite::fromJSON() %>%
     as.data.frame
 
   polarity <- req$entity_list.category_list[[1]]$polarity[1]
