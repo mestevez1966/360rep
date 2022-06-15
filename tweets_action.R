@@ -127,13 +127,13 @@ download_t <- function(company = "repsol",
   } else {
 
     # Generamo los ID de la competencia
-    new_data$company_id <- NULL
+    new_data$competitor_id <- NULL
 
     for(i in 1:length(competence)) {
 
       comp_index <- grepl(competence[i], rownames(new_data), fixed = TRUE)
 
-      new_data$company_id[comp_index] <- id_competence_base - 1 + i
+      new_data$competitor_id[comp_index] <- id_competence_base - 1 + i
 
     }
 
