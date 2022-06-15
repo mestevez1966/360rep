@@ -2,7 +2,7 @@ name: tweetbot
 
 on:
   schedule:
-    - cron: '58 19 * * *'
+    - cron: '13 20 * * *'
 
 jobs:
   tweetbot-post:
@@ -11,6 +11,7 @@ jobs:
       BEARER_TOKEN: ${{ secrets.BEARER_TOKEN }}
       MEANINGCLOUD_TOKEN: ${{ secrets.MEANING_TOKEN }}
       ENDPOINT_TOKEN: ${{ secrets.ENDPOINT_TOKEN }}
+      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
     steps:
       - uses: actions/checkout@v2
       - uses: r-lib/actions/setup-r@master
