@@ -16,7 +16,7 @@ jobs:
       - uses: r-lib/actions/setup-r@master
       - name: Install packages
         run: Rscript -e 'install.packages(c("rtweet", "dplyr", "curl", "jsonlite"))'
-      - name: Merge files
+      - name: Download data
         run: Rscript tweets_action.R
       - name: Commit files
         run: |
