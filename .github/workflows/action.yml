@@ -16,7 +16,7 @@ jobs:
       - uses: actions/checkout@v2
       - uses: r-lib/actions/setup-r@master
       - name: Install packages
-        run: Rscript -e 'install.packages(c("rtweet", "dplyr", "curl", "jsonlite", "remotes"))'
+        run: Rscript -e 'install.packages(c("rtweet", "dplyr", "curl", "jsonlite", "remotes", "DBI"))'
       - name: Install GitHub packages
         run: Rscript -e 'remotes::install_github("ropensci/rtweet")'
       - name: Download data
