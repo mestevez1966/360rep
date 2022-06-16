@@ -204,8 +204,8 @@ download_t <- function(company = "repsol",
 
 
 # Ejecutamos
-download_t(type = "company", test = T)
-download_t(type = "competence", test = T)
+download_t(type = "company")
+download_t(type = "competence")
 
 
 
