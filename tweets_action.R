@@ -3,14 +3,13 @@ library(rtweet)
 library(curl)
 library(dplyr)
 library(jsonlite)
-# library(DBI)
+library(DBI)
 
 # Ideas:
 # https://public.graphext.com/f1dd11b4acb1e181/index.html
 
 # Auth bearer token
 auth <- rtweet::rtweet_app(bearer_token = Sys.getenv("BEARER_TOKEN"))
-
 
 #---------------
 # MEANINGCLOUD
@@ -148,11 +147,54 @@ download_t <- function(company = "repsol",
 
   if(type == "company") {
 
-    write.csv2(new_data, file = paste0("archivos/", gsub("@", "", company), format(Sys.time(),'_%Y_%m_%d_%H_%M_%S'), ".csv"), row.names = FALSE, na = "", fileEnconding = "ASCII")
+    write.csv2(new_data, file = paste0("archivos/", gsub("@", "", company), format(Sys.time(),'_%Y_%m_%d_%H_%M_%S'), ".csv"), row.names = FALSE, na = "")
+
+
+
+
+    # Guardamos en una base de datos SQL
+    mydb <- dbConnect(RSQLite::SQLite(), "archivos/db_tweets.sqlite", extended_types = TRUE)
+
+    # Si la tabla ya existe agregamos las nuevas filas, sino creamos la tabla
+    if("data" %in% dbListTables(mydb)) {
+
+      dbAppendTable(mydb, "tweets", new_data, row.names = NULL)
+
+    } else {
+
+      # Tabla data, data frame new_data
+      dbWriteTable(mydb, "tweets", new_data)
+
+    }
+
+    # Desconectamos
+    dbDisconnect(mydb)
+
+
 
   } else {
 
-    write.csv2(new_data, file = paste0("archivos/", "competence", format(Sys.time(),'_%Y_%m_%d_%H_%M_%S'), ".csv"), row.names = FALSE, na = "", fileEnconding = "ASCII")
+    write.csv2(new_data, file = paste0("archivos/", "competence", format(Sys.time(),'_%Y_%m_%d_%H_%M_%S'), ".csv"), row.names = FALSE, na = "")
+
+
+    # Guardamos en una base de datos SQL
+    mydb <- dbConnect(RSQLite::SQLite(), "archivos/db_competencia.sqlite", extended_types = TRUE)
+
+    # Si la tabla ya existe agregamos las nuevas filas, sino creamos la tabla
+    if("data" %in% dbListTables(mydb)) {
+
+      dbAppendTable(mydb, "tweets_competencia", new_data, row.names = NULL)
+
+    } else {
+
+      # Tabla data, data frame new_data
+      dbWriteTable(mydb, "tweets_competencia", new_data)
+
+    }
+
+    # Desconectamos
+    dbDisconnect(mydb)
+
 
 
   }
@@ -161,5 +203,8 @@ download_t <- function(company = "repsol",
 
 
 # Ejecutamos
-download_t(type = "company")
-download_t(type = "competence")
+download_t(type = "company", test = T)
+download_t(type = "competence", test = T)
+
+
+
