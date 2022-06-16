@@ -4,6 +4,7 @@ library(curl)
 library(dplyr)
 library(jsonlite)
 library(DBI)
+library(RSQLite)
 
 # Ideas:
 # https://public.graphext.com/f1dd11b4acb1e181/index.html
