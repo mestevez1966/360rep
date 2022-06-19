@@ -100,24 +100,14 @@ download_t <- function(company = "repsol",
   new_data <- data[!duplicated(data), ]
 
 
-  if(test == TRUE) {
+  # Obtenemos las dimensiones y polaridades
+  pol <- apply(new_data[, c("full_text"), drop = FALSE], 1, meaningcloud)
+  pol <- dplyr::bind_rows(pol)
 
-    new_data$polarity <- sample(c("N+", "N", "NEU", "NONE", "P", "P+", NA), nrow(new_data), replace = TRUE)
-    new_data$dimension <- sample(c("Gobernanza", "Innovación", "Ciudadanía",
-                                   "Productos y servicios", "Lugar de trabajo",
-                                   "Liderazgo", "Rendimiento", NA), nrow(new_data), replace = TRUE)
+  # Unimos con el resto de datos
+  new_data$polarity <- pol$polarity
+  new_data$dimension <- pol$dimension
 
-  } else {
-
-    # Obtenemos las dimensiones y polaridades
-    pol <- apply(new_data[, c("full_text"), drop = FALSE], 1, meaningcloud)
-    pol <- dplyr::bind_rows(pol)
-
-    # Unimos con el resto de datos
-    new_data$polarity <- pol$polarity
-    new_data$dimension <- pol$dimension
-
-  }
 
   if(type == "company") {
 
