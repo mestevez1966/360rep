@@ -53,19 +53,20 @@ download_t <- function(company = "repsol",
                        competence =  c("Iberdrola", "Naturgy", "Endesa"),
                        id_competence_base = 100000,
                        type,
+                       n = 300,
                        test = FALSE) {
 
   if(type == "company") {
 
     # Descarga de tweets de la empresa y datos de usuarios de cada tweet
-    tweets <- rtweet::search_tweets(paste0("@", company), token = auth, include_rts = FALSE,  n = 300, type = "recent")
+    tweets <- rtweet::search_tweets(paste0("@", company), token = auth, include_rts = FALSE,  n = n, type = "recent")
 
   }
 
   if(type == "competence") {
 
     # Descarga de tweets de competencia y datos de usuarios de cada tweet
-    tweets <- rtweet::search_tweets2(paste0("@", competence), token = auth, include_rts = FALSE, n = 300, type = "recent")
+    tweets <- rtweet::search_tweets2(paste0("@", competence), token = auth, include_rts = FALSE, n = n, type = "recent")
   }
 
   # a <- data.table::rbindlist(tweets$metadata)
@@ -192,8 +193,8 @@ download_t <- function(company = "repsol",
 
 
 # Ejecutamos
-download_t(type = "company", test = FALSE)
-download_t(type = "competence", test = FALSE)
+download_t(type = "company", test = FALSE, n = 20)
+download_t(type = "competence", test = FALSE, n = 20)
 
 
 
