@@ -148,7 +148,7 @@ download_t <- function(company = "repsol",
     # Si la tabla ya existe agregamos las nuevas filas, sino creamos la tabla
     if("tweets" %in% dbListTables(mydb)) {
 
-      dbAppendTable(mydb, "tweets", new_data, row.names = NULL)
+      dbAppendTable(mydb, "tweets", new_data, row.names = NULL, append = TRUE)
 
     } else {
 
@@ -173,7 +173,7 @@ download_t <- function(company = "repsol",
     # Si la tabla ya existe agregamos las nuevas filas, sino creamos la tabla
     if("tweets" %in% dbListTables(mydb)) {
 
-      dbAppendTable(mydb, "tweets_competencia", new_data, row.names = NULL)
+      dbAppendTable(mydb, "tweets_competencia", new_data, row.names = NULL, append = TRUE)
 
     } else {
 
