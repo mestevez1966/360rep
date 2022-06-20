@@ -106,9 +106,7 @@ download_t <- function(company = "repsol",
   pol <- dplyr::bind_rows(pol)
 
   # Unimos con el resto de datos
-  new_data$polarity <- pol$polarity
-  new_data$dimension <- pol$dimension
-
+  new_data <- cbind(new_data, pol)
 
   if(type == "company") {
 
