@@ -2,7 +2,7 @@ name: tweetbot
 
 on:
   schedule:
-    - cron: '35 14 * * *'
+    - cron: '35 15 * * *'
 
 jobs:
   tweetbot-post:
@@ -20,7 +20,7 @@ jobs:
       - name: Install GitHub packages
         run: Rscript -e 'remotes::install_github("ropensci/rtweet")'
       - name: Download data
-        run: Rscript test.R
+        run: Rscript tweets_action.R
       - name: Commit files
         run: |
           git config --local user.email "actions@github.com"
