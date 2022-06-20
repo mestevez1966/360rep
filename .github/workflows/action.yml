@@ -9,7 +9,7 @@ jobs:
     runs-on: macOS-latest
     env:
       BEARER_TOKEN: ${{ secrets.BEARER_TOKEN }}
-      MEANINGCLOUD_TOKEN: ${{ secrets.MEANING_TOKEN }}
+      MEANING_TOKEN: ${{ secrets.MEANING_TOKEN }}
       ENDPOINT_TOKEN: ${{ secrets.ENDPOINT_TOKEN }}
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
     steps:
