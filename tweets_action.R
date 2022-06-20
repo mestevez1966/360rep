@@ -27,7 +27,7 @@ meaningcloud <- function(texto, token = Sys.getenv("MEANING_TOKEN")) {
 
   # print(texto)
 
-  req <- curl::curl_fetch_memory(Sys.getenv("ENDPOINT_TOKEN"), handle = h)
+  req <- curl::curl_fetch_memory("https://api.meaningcloud.com/reputation-2.0", handle = h)
 
   req <- req$content %>%
     rawToChar() %>%
