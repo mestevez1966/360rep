@@ -9,7 +9,7 @@ library(RSQLite)
 auth <- rtweet::rtweet_app(bearer_token = Sys.getenv("BEARER_TOKEN"))
 
 token <- Sys.getenv("MEANING_TOKEN")
-meaningcloud <- function(texto, token = token)) {
+meaningcloud <- function(texto, token = token) {
   # Post
   h <- curl::new_handle()
   curl::handle_setform(h,
