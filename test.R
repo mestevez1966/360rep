@@ -5,6 +5,10 @@ library(jsonlite)
 library(DBI)
 library(RSQLite)
 
+# Auth bearer token
+auth <- rtweet::rtweet_app(bearer_token = Sys.getenv("BEARER_TOKEN"))
+
+
 meaningcloud <- function(texto, token = Sys.getenv("MEANING_TOKEN")) {
   # Post
   h <- curl::new_handle()
