@@ -137,7 +137,7 @@ download_t <- function(company = "repsol",
     new_data <- new_data %>%
       relocate(company_id, .after = last_col())
     
-    write.csv2(new_data, file = paste0( "company", format(Sys.time(),'_%Y_%m_%d_%H_%M_%S'), ".csv"), row.names = FALSE, na = "")
+    write.csv2(new_data, file = paste0("archivos/", "company", format(Sys.time(),'_%Y_%m_%d_%H_%M_%S'), ".csv"), row.names = FALSE, na = "")
     
     
     # Guardamos en una base de datos SQL
@@ -166,7 +166,7 @@ download_t <- function(company = "repsol",
     new_data <- new_data %>%
       relocate(competitor_id, .after = last_col())
     
-    write.csv2(new_data, file = paste0("competence", format(Sys.time(),'_%Y_%m_%d_%H_%M_%S'), ".csv"), row.names = T, na = "")
+    write.csv2(new_data, file = paste0("archivos/", "competence", format(Sys.time(),'_%Y_%m_%d_%H_%M_%S'), ".csv"), row.names = T, na = "")
     
     
     # Guardamos en una base de datos SQL
