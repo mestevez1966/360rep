@@ -130,7 +130,7 @@ download_t <- function(company = "repsol",
   #-------------
   # Guardamos
   #-------------
-                                                               
+  
   if(type == "company") {
     
     # Reordenamos la columna company_id
@@ -138,76 +138,85 @@ download_t <- function(company = "repsol",
       relocate(company_id, .after = last_col())
     
     
-    new_data <- new_data[ , c("created_at",
-                              "id",	
-                              "id_str",
-                              "full_text"	,
-                              "truncated",
-                              "display_text_range",
-                              "entities",
-                              "metadata",
-                              "tweet_source",
-                              "in_reply_to_status_id",
-                              "in_reply_to_status_id_str",
-                              "in_reply_to_user_id",
-                              "in_reply_to_user_id_str",
-                              "in_reply_to_screen_name",
-                              "geo",
-                              "coordinates",
-                              "place",
-                              "contributors",
-                              "is_quote_status",	
-                              "retweet_count",	
-                              "favorite_count",
-                              "favorited",
-                              "retweeted",
-                              "lang",
-                              "possibly_sensitive",
-                              "quoted_status_id",
-                              "quoted_status_id_str",
-                              "quoted_status",
-                              "text",
-                              "favorited_by",
-                              "scopes",
-                              "display_text_width",
-                              "retweeted_status",
-                              "quoted_status_permalink",
-                              "quote_count",
-                              "timestamp_ms",
-                              "reply_count",
-                              "filter_level",
-                              "query",
-                              "withheld_scope",
-                              "withheld_copyright",
-                              "withheld_in_countries",
-                              "possibly_sensitive_appealable",
-                              "id_user",
-                              "id_str_user",
-                              "name_user",
-                              "screen_name_user",
-                              "location_user",
-                              "description_user",
-                              "url_user",
-                              "protected_user",
-                              "followers_count_user",
-                              "friends_count_user",
-                              "listed_count_user",
-                              "created_at_user",
-                              "favourites_count_user",
-                              "verified_user",
-                              "statuses_count_user",
-                              "profile_image_url_https_user",
-                              "profile_banner_url_user",
-                              "default_profile_user",
-                              "default_profile_image_user",
-                              "withheld_in_countries_user",
-                              "derived_user",
-                              "withheld_scope_user",
-                              "entities_user",
-                              "tweet_link",
-                              "polarity",
-                              "dimension",
-                              "company_id")]
+    orden <- c("created_at",
+               "id",	
+               "id_str",
+               "full_text"	,
+               "truncated",
+               "display_text_range",
+               "entities",
+               "metadata",
+               "tweet_source",
+               "in_reply_to_status_id",
+               "in_reply_to_status_id_str",
+               "in_reply_to_user_id",
+               "in_reply_to_user_id_str",
+               "in_reply_to_screen_name",
+               "geo",
+               "coordinates",
+               "place",
+               "contributors",
+               "is_quote_status",	
+               "retweet_count",	
+               "favorite_count",
+               "favorited",
+               "retweeted",
+               "lang",
+               "possibly_sensitive",
+               "quoted_status_id",
+               "quoted_status_id_str",
+               "quoted_status",
+               "text",
+               "favorited_by",
+               "scopes",
+               "display_text_width",
+               "retweeted_status",
+               "quoted_status_permalink",
+               "quote_count",
+               "timestamp_ms",
+               "reply_count",
+               "filter_level",
+               "query",
+               "withheld_scope",
+               "withheld_copyright",
+               "withheld_in_countries",
+               "possibly_sensitive_appealable",
+               "id_user",
+               "id_str_user",
+               "name_user",
+               "screen_name_user",
+               "location_user",
+               "description_user",
+               "url_user",
+               "protected_user",
+               "followers_count_user",
+               "friends_count_user",
+               "listed_count_user",
+               "created_at_user",
+               "favourites_count_user",
+               "verified_user",
+               "statuses_count_user",
+               "profile_image_url_https_user",
+               "profile_banner_url_user",
+               "default_profile_user",
+               "default_profile_image_user",
+               "withheld_in_countries_user",
+               "derived_user",
+               "withheld_scope_user",
+               "entities_user",
+               "tweet_link",
+               "polarity",
+               "dimension",
+               "company_id")
+    
+    
+    
+    remove <- which(!(orden %in% colnames(new_data)))
+    
+    orden <- orden[-remove]
+    
+    new_data <- new_data[ ,orden]
+    
     
     
     write.csv2(new_data, file = paste0("archivos/", "company", format(Sys.time(),'_%Y_%m_%d_%H_%M_%S'), ".csv"), row.names = FALSE, na = "")
@@ -215,22 +224,22 @@ download_t <- function(company = "repsol",
     
     # Guardamos en una base de datos SQL
     mydb <- dbConnect(RSQLite::SQLite(), "archivos/db_tweets.sqlite", extended_types = TRUE)
-
+    
     # Si la tabla ya existe agregamos las nuevas filas, sino creamos la tabla
     if("tweets" %in% dbListTables(mydb)) {
-
+      
       dbAppendTable(mydb, "tweets", new_data, row.names = NULL, append = TRUE)
-
+      
     } else {
-
+      
       # Tabla data, data frame new_data
       dbWriteTable(mydb, "tweets", new_data)
-
+      
     }
-
+    
     # Desconectamos
     dbDisconnect(mydb)
-
+    
     
     
   } else {
@@ -241,76 +250,85 @@ download_t <- function(company = "repsol",
     
     
     
-        new_data <- new_data[ , c("created_at",
-                              "id",	
-                              "id_str",
-                              "full_text"	,
-                              "truncated",
-                              "display_text_range",
-                              "entities",
-                              "metadata",
-                              "tweet_source",
-                              "in_reply_to_status_id",
-                              "in_reply_to_status_id_str",
-                              "in_reply_to_user_id",
-                              "in_reply_to_user_id_str",
-                              "in_reply_to_screen_name",
-                              "geo",
-                              "coordinates",
-                              "place",
-                              "contributors",
-                              "is_quote_status",	
-                              "retweet_count",	
-                              "favorite_count",
-                              "favorited",
-                              "retweeted",
-                              "lang",
-                              "possibly_sensitive",
-                              "quoted_status_id",
-                              "quoted_status_id_str",
-                              "quoted_status",
-                              "text",
-                              "favorited_by",
-                              "scopes",
-                              "display_text_width",
-                              "retweeted_status",
-                              "quoted_status_permalink",
-                              "quote_count",
-                              "timestamp_ms",
-                              "reply_count",
-                              "filter_level",
-                              "query",
-                              "withheld_scope",
-                              "withheld_copyright",
-                              "withheld_in_countries",
-                              "possibly_sensitive_appealable",
-                              "id_user",
-                              "id_str_user",
-                              "name_user",
-                              "screen_name_user",
-                              "location_user",
-                              "description_user",
-                              "url_user",
-                              "protected_user",
-                              "followers_count_user",
-                              "friends_count_user",
-                              "listed_count_user",
-                              "created_at_user",
-                              "favourites_count_user",
-                              "verified_user",
-                              "statuses_count_user",
-                              "profile_image_url_https_user",
-                              "profile_banner_url_user",
-                              "default_profile_user",
-                              "default_profile_image_user",
-                              "withheld_in_countries_user",
-                              "derived_user",
-                              "withheld_scope_user",
-                              "entities_user",
-                              "tweet_link",
-                              "polarity",
-                              "dimension",
-                              "competitor_id")]
+    orden <- c("created_at",
+               "id",	
+               "id_str",
+               "full_text"	,
+               "truncated",
+               "display_text_range",
+               "entities",
+               "metadata",
+               "tweet_source",
+               "in_reply_to_status_id",
+               "in_reply_to_status_id_str",
+               "in_reply_to_user_id",
+               "in_reply_to_user_id_str",
+               "in_reply_to_screen_name",
+               "geo",
+               "coordinates",
+               "place",
+               "contributors",
+               "is_quote_status",	
+               "retweet_count",	
+               "favorite_count",
+               "favorited",
+               "retweeted",
+               "lang",
+               "possibly_sensitive",
+               "quoted_status_id",
+               "quoted_status_id_str",
+               "quoted_status",
+               "text",
+               "favorited_by",
+               "scopes",
+               "display_text_width",
+               "retweeted_status",
+               "quoted_status_permalink",
+               "quote_count",
+               "timestamp_ms",
+               "reply_count",
+               "filter_level",
+               "query",
+               "withheld_scope",
+               "withheld_copyright",
+               "withheld_in_countries",
+               "possibly_sensitive_appealable",
+               "id_user",
+               "id_str_user",
+               "name_user",
+               "screen_name_user",
+               "location_user",
+               "description_user",
+               "url_user",
+               "protected_user",
+               "followers_count_user",
+               "friends_count_user",
+               "listed_count_user",
+               "created_at_user",
+               "favourites_count_user",
+               "verified_user",
+               "statuses_count_user",
+               "profile_image_url_https_user",
+               "profile_banner_url_user",
+               "default_profile_user",
+               "default_profile_image_user",
+               "withheld_in_countries_user",
+               "derived_user",
+               "withheld_scope_user",
+               "entities_user",
+               "tweet_link",
+               "polarity",
+               "dimension",
+               "competitor_id")
+    
+    
+    remove <- which(!(orden %in% colnames(new_data)))
+    
+    orden <- orden[-remove]
+    
+    new_data <- new_data[ ,orden]
+    
+    
     
     
     write.csv2(new_data, file = paste0("archivos/", "competence", format(Sys.time(),'_%Y_%m_%d_%H_%M_%S'), ".csv"), row.names = T, na = "")
@@ -318,22 +336,22 @@ download_t <- function(company = "repsol",
     
     # Guardamos en una base de datos SQL
     mydb_c <- dbConnect(RSQLite::SQLite(), "archivos/db_competencia.sqlite", extended_types = TRUE)
-
+    
     # Si la tabla ya existe agregamos las nuevas filas, sino creamos la tabla
     if("tweets_competencia" %in% dbListTables(mydb_c)) {
-
+      
       dbAppendTable(mydb_c, "tweets_competencia", new_data, row.names = NULL, append = TRUE)
-
+      
     } else {
-
+      
       # Tabla data, data frame new_data
       dbWriteTable(mydb_c, "tweets_competencia", new_data)
-
+      
     }
-
+    
     # Desconectamos
     dbDisconnect(mydb_c)
-
+    
     
   }
   
