@@ -18,7 +18,7 @@ jobs:
       - name: Install packages
         run: Rscript -e 'install.packages(c("rtweet", "dplyr", "curl", "jsonlite", "remotes", "DBI", "RSQLite"))'
       - name: Install GitHub packages
-        run: Rscript -e 'remotes::install_github("mestevez1966/rtweet@bearer-token")'
+        run: Rscript -e 'remotes::install_github("mestevez1966/rtweet")'
       - name: Download data
         run: Rscript tweets_action.R
       - name: Commit files
