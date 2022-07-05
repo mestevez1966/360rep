@@ -213,9 +213,13 @@ download_t <- function(company = "repsol",
     
     remove <- which(!(orden %in% colnames(new_data)))
     
-    orden <- orden[-remove]
+    if(length(remove) > 0) {
+      
+      orden <- orden[-remove]
+    }
     
-    new_data <- new_data[ ,orden]
+    
+    new_data <- new_data[ , orden]
     
     
     
@@ -223,23 +227,23 @@ download_t <- function(company = "repsol",
     
     
     # Guardamos en una base de datos SQL
-    mydb <- dbConnect(RSQLite::SQLite(), "archivos/db_tweets.sqlite", extended_types = TRUE)
+    mydb <- dbCoCnnect(RSQLite::SQLite(), "archivos/db_tweets.sqlite", extended_types = TRUE)
     
     # Si la tabla ya existe agregamos las nuevas filas, sino creamos la tabla
     if("tweets" %in% dbListTables(mydb)) {
-      
+    #   
       dbAppendTable(mydb, "tweets", new_data, row.names = NULL, append = TRUE)
-      
+    #   
     } else {
-      
-      # Tabla data, data frame new_data
+    #   
+    #   # Tabla data, data frame new_data
       dbWriteTable(mydb, "tweets", new_data)
-      
+    #   
     }
-    
-    # Desconectamos
+    # 
+    # # Desconectamos
     dbDisconnect(mydb)
-    
+    # 
     
     
   } else {
@@ -324,7 +328,11 @@ download_t <- function(company = "repsol",
     
     remove <- which(!(orden %in% colnames(new_data)))
     
-    orden <- orden[-remove]
+    if(length(remove) > 0) {
+      
+      orden <- orden[-remove]
+    }
+    
     
     new_data <- new_data[ ,orden]
     
@@ -336,19 +344,19 @@ download_t <- function(company = "repsol",
     
     # Guardamos en una base de datos SQL
     mydb_c <- dbConnect(RSQLite::SQLite(), "archivos/db_competencia.sqlite", extended_types = TRUE)
-    
+
     # Si la tabla ya existe agregamos las nuevas filas, sino creamos la tabla
     if("tweets_competencia" %in% dbListTables(mydb_c)) {
-      
+
       dbAppendTable(mydb_c, "tweets_competencia", new_data, row.names = NULL, append = TRUE)
-      
+    #
     } else {
-      
+    #
       # Tabla data, data frame new_data
       dbWriteTable(mydb_c, "tweets_competencia", new_data)
-      
+    #
     }
-    
+
     # Desconectamos
     dbDisconnect(mydb_c)
     
