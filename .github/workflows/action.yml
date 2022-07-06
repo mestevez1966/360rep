@@ -6,7 +6,7 @@ on:
 
 jobs:
   tweetbot-post:
-    runs-on: macOS-latest
+    runs-on: ubuntu-latest
     env:
       BEARER_TOKEN: ${{ secrets.BEARER_TOKEN }}
       MEANING_TOKEN: ${{ secrets.MEANING_TOKEN }}
