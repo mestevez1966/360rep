@@ -229,7 +229,7 @@ download_t <- function(company = "repsol",
     
     
     # Guardamos en una base de datos SQL
-    mydb <- dbCoCnnect(RSQLite::SQLite(), "archivos/db_tweets.sqlite", extended_types = TRUE)
+    mydb <- dbConnect(RSQLite::SQLite(), "archivos/db_tweets.sqlite", extended_types = TRUE)
     
     # Si la tabla ya existe agregamos las nuevas filas, sino creamos la tabla
     if("tweets" %in% dbListTables(mydb)) {
