@@ -116,9 +116,11 @@ download_t <- function(company = "repsol",
   
   
   # Obtenemos las dimensiones y polaridades
-  pol <- apply(new_data[, c("full_text"), drop = FALSE], 1, meaningcloud)
-  pol <- dplyr::bind_rows(pol)
+  #pol <- apply(new_data[, c("full_text"), drop = FALSE], 1, meaningcloud)
+  #pol <- dplyr::bind_rows(pol)
   
+  pol <- data.frame(polarity = NA, dimension = NA)               
+                   
   # Unimos con el resto de datos
   new_data <- cbind(new_data, pol)
   
