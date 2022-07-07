@@ -2,7 +2,7 @@ name: tweetbot
 
 on:
   schedule:
-    - cron: '08 10 * * *'
+    - cron: '00 11 * * *'
 
 jobs:
   tweetbot-post:
