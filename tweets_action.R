@@ -341,7 +341,7 @@ download_t <- function(company = "repsol",
     
     
     
-    write.csv2(new_data, file = paste0("archivos/", "competence", format(Sys.time(),'_%Y_%m_%d_%H_%M_%S'), ".csv"), row.names = T, na = "")
+    write.csv2(new_data, file = paste0("archivos/", "competence", format(Sys.time(),'_%Y_%m_%d_%H_%M_%S'), ".csv"), row.names = FALSE, na = "")
     
     
     # Guardamos en una base de datos SQL
